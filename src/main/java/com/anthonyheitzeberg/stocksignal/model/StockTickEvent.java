@@ -9,7 +9,7 @@ public class StockTickEvent {
     private long volume;
     private long timestamp; // epoch millis, event time
 
-    // Flink POJOs requre a no-arg constructor
+    // Flink POJOs require a no-arg constructor
     public StockTickEvent() {}
 
     public StockTickEvent(String symbol, double price, long volume, long timestamp) {
