@@ -1,6 +1,7 @@
 package com.anthonyheitzeberg.stocksignal.pattern;
 
 import com.anthonyheitzeberg.stocksignal.model.StockTickEvent;
+import org.apache.flink.cep.nfa.aftermatch.AfterMatchSkipStrategy;
 import org.apache.flink.cep.pattern.Pattern;
 import org.apache.flink.cep.pattern.conditions.IterativeCondition;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -11,7 +12,7 @@ public class SurgePatternFactory {
     private static final double VOLUME_SPIKE_MULTIPLIER = 1.5; // 50% more volume
 
     public static Pattern<StockTickEvent, ?> build() {
-        return Pattern.<StockTickEvent>begin("start")
+        return Pattern.<StockTickEvent>begin("start", AfterMatchSkipStrategy.skipPastLastEvent())
                 .followedBy("spike")
                 .where(new IterativeCondition<StockTickEvent>() {
                     @Override
