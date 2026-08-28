@@ -1,6 +1,7 @@
 package com.anthonyheitzeberg.stocksignal.job;
 
 import com.anthonyheitzeberg.stocksignal.aggregate.MovingAverageAggregator;
+import com.anthonyheitzeberg.stocksignal.aggregate.PriceSignalWindowFunction;
 import com.anthonyheitzeberg.stocksignal.model.PriceSignal;
 import com.anthonyheitzeberg.stocksignal.model.StockTickEvent;
 import com.anthonyheitzeberg.stocksignal.source.StockTickSource;
@@ -36,7 +37,7 @@ public class StockSignalJob {
                 keyedTicks.window(SlidingEventTimeWindows.of(Time.seconds(30), Time.seconds(5)));
 
         DataStream<PriceSignal> movingAverages =
-                windowedTicks.aggregate(new MovingAverageAggregator());
+                windowedTicks.aggregate(new MovingAverageAggregator(), new PriceSignalWindowFunction());
 
         movingAverages.print();
 
