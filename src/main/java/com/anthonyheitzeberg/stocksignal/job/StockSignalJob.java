@@ -6,6 +6,7 @@ import com.anthonyheitzeberg.stocksignal.model.PriceSignal;
 import com.anthonyheitzeberg.stocksignal.model.StockTickEvent;
 import com.anthonyheitzeberg.stocksignal.model.TradingSignal;
 import com.anthonyheitzeberg.stocksignal.pattern.SurgePatternFactory;
+import com.anthonyheitzeberg.stocksignal.sink.SignalFileSink;
 import com.anthonyheitzeberg.stocksignal.source.StockTickSource;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
@@ -79,6 +80,9 @@ public class StockSignalJob {
         );
 
         signals.print("SIGNAL");
+
+        signals.addSink(new SignalFileSink("signal-log.txt"))
+                        .setParallelism(1).name("Signal File Sink");
 
         env.execute("Stock Signal Engine");
     }
