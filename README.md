@@ -4,7 +4,7 @@ A real-time stock trading signal generator built with Apache Flink, using
 Complex Event Processing (CEP) to detect trading signals from a simulated
 stream of stock price/volume ticks.
 
-## What it should do after completion 🏗️
+## What it can do 🥇
 Ingests a stream of synthetic stock tick events (symbol, price, volume,
 timestamp) and applies CEP pattern matching to detect signals such as:
 - Moving average crossovers
